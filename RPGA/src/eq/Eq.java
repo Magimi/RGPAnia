@@ -1,9 +1,15 @@
 package eq;
 
+import game.Move;
 import game.Player;
 import java.util.Scanner;
 
 public class Eq {
+    public static final String CYAN = "\u001B[36m"; //zdobywanie itemku
+    public static final String RESET = "\u001B[0m";
+    public static final String RED = "\u001B[31m";//otrzymanie obrażeń
+    public static final String YELLOW= "\033[0;93m"; //poziom
+    public static final String PURPLE = "\033[0;95m"; // systemowe
 
     //itemki "stałe" o zmieniającej się ilości
     public static int torch = 0;
@@ -44,6 +50,12 @@ public class Eq {
     public static void setCrowbar(int current){
         crowbar+=current;
     }
+    public static int getHPPots(){
+        return HPPots;
+    }
+    public static int getManaPots(){
+        return ManaPots;
+    }
 
     public static void setCurrentWeapon(int current){
 
@@ -75,7 +87,7 @@ public class Eq {
         for (int a = 0; a < 10; a++) {
             if (ItemEq[a] == -1) {
                 ItemEq[a] = Items.ItemsArray[addId].id;
-                System.out.println("Nowy przedmiot został dodany do twojego ekwipunku");
+                System.out.println(CYAN+"Nowy przedmiot został dodany do twojego ekwipunku"+RESET);
                 break;
             }
         }
@@ -84,14 +96,15 @@ public class Eq {
             for(int a=0;a<10;a++){
                 if(WeaponEq[a] == -1) {
                     WeaponEq[a] = Weapons.WeaponsArray[addId].id;
-                    System.out.println("Nowa broń została dodana do twojego ekwipunku");
+                    System.out.println(CYAN+"Nowa broń została dodana do twojego ekwipunku"+RESET);
                     break;
                 }
             }
         }
+
         public static void gearOn(){
             System.out.println("Broń: "+currentWeaponName);
-            System.out.println("(1)Zmień broń/(2)Wyświetl statystyki/(x)Wróć");
+            System.out.println(PURPLE+"(1)Zmień broń/(2)Wyświetl statystyki/(x)Wróć"+RESET);
             Scanner scanner = new Scanner(System.in);
             String x = scanner.next();
             //System.out.println("Zbroja: "+currentArmorName);
@@ -108,7 +121,7 @@ public class Eq {
                     System.out.println("życie +" +Weapons.WeaponsArray[currentWeapon].health);
                     gearOn();
                 case "x":
-                    //coś żeby wrócić
+                   break;
 
             }
         }

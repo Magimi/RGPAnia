@@ -6,6 +6,7 @@ import game.Player;
 import eq.Items;
 
 public class Szczur extends Monsters {
+    public static int szczurDeath = 5;
 
     public Szczur(double health, double healthMax, double attack, double deffence, String monsterName, double coins, double exp, double drop) {
         super(health, healthMax, attack, deffence, monsterName, coins, exp, drop);
@@ -19,8 +20,8 @@ public class Szczur extends Monsters {
         physicalDamage();
     }
 
-    public static void SzczurDeath() {
+    public static int getSzczurDeath() {
+    return szczurDeath;
 
-        Eq.addItemToEq(0);
     }
 }
