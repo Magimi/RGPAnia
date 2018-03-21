@@ -4,6 +4,7 @@ import eq.Eq;
 import monsters.Szczur;
 import Misc.Random;
 import java.util.Scanner;
+import game.controller.AnchorPaneController;
 public class Move {
     public static final String CYAN = "\u001B[36m"; //zdobywanie itemku
     public static final String RESET = "\u001B[0m";
@@ -16,13 +17,14 @@ public class Move {
 
     public static void Sewers() {
 
-        System.out.println("Co chcesz zrobić?"+PURPLE+"((1)idz na polnoc/(2)idz na poludnie/(3)spij(regeneracja hp i many)/(m)menu"+RESET);
+        System.out.println("Co chcesz zrobić?"+PURPLE+"((1)idz na polnoc/(2)idz na poludnie/(b)spij(regeneracja hp i many)/(m)menu"+RESET);
         Scanner odczyt = new Scanner(System.in);
         String x = odczyt.nextLine();
 
 
         switch (x) {
             case "1":
+
                 if (Eq.torch == 0) {
                     System.out.println("Jest za ciemno, żeby iść dalej");
                     Sewers();
@@ -40,21 +42,27 @@ public class Move {
                 }
 
             case "2":
-                Szczur szczur = new Szczur(20, 20, 1, 2, "Szczur", 1, 1, 1);
-                if(monsters.Szczur.getSzczurDeath()>0){
-                Fight.startBattle();
-                Szczur.szczurDeath--;
-                Sewers();}
-                else if(monsters.Szczur.getSzczurDeath()==0){
-                    System.out.println("Twój masowy mord na szczurach obudził ich króla");
-                    Szczur szczur1 = new Szczur(50,50,3,6,"Król Szczurów",5,5,5);
-                    Fight.startBattle();
+                if(Szczur.szczurDeath>-1) {
+                    Szczur szczur = new Szczur(20, 20, 1, 2, "Szczur", 1, 1, 1);
+                    if (monsters.Szczur.getSzczurDeath() > 0) {
+                        Fight.startBattle();
+                        Szczur.szczurDeath--;
+                        Sewers();
+                    } else if (monsters.Szczur.getSzczurDeath() == 0) {
+                        System.out.println("Twój masowy mord na szczurach obudził ich króla");
+                        Szczur szczur1 = new Szczur(50, 50, 3, 6, "Król Szczurów", 5, 5, 5);
+                        Fight.startBattle();
+                        Szczur.szczurDeath--;
+                        Sewers();
+                    }
+                }
+                else{
+                    System.out.println("Nic już tutaj nie znajdziesz");
                     Sewers();
                 }
 
             case "b":
                 System.out.println("Jest zbyt niebezpiecznie, żeby pójść spać. TIP: poszukaj schronienia");
-
             case "m":
                 Player.Menu();
                 Sewers();
@@ -63,24 +71,19 @@ public class Move {
 
     public static void Corpse() {
 
-        System.out.println("Co robisz?"+PURPLE+"((1)idz na poludnie/(2)idz na polnoc/(3)przeszukaj zwłoki/(b)spij(regeneracja hp i many)(s)statystyki/(e)ekwipunek/(p)wyposażenie)"+RESET);
+        System.out.println("Co robisz?"+PURPLE+"((1)idz na poludnie/(2)idz na polnoc/(3)przeszukaj zwłoki/(b)spij(regeneracja hp i many)(m)menu)"+RESET);
         Scanner odczyt = new Scanner(System.in);
         String x = odczyt.nextLine();
-
 
         switch (x) {
             case "1":
                 System.out.println("Wracasz tam gdzie się obudziłeś");
                 Sewers();
-
             case "2":
                 System.out.println("W głębi kanału dostrzegasz drabinę i właz, prowadzące na zewnątrz");
-
                 Outside();
-
             case "3":
-              //  Eq.unequipWeapon(Eq.currentWeapon);
-               // Eq.setCurrentWeapon(Random.Random(1, 3));
+
                 double coins = Random.random(20, 50);
                 Player.setMoney(coins);
                 Eq.addWeaponToEq(Random.Random(1,3));
@@ -91,25 +94,17 @@ public class Move {
                 System.out.println("Spanie pomiędzy szkieletami nie należy do najprzyjemniejszych ale wygląda na to, że nie masz wyboru");
                 Player.Sleep();
                 Corpse();
-
-            case "s":
-                Player.Stats();
+            case "m":
+                Player.Menu();
                 Corpse();
 
-            case "e":
-                Player.Eq();
-                Corpse();
-            case "p":
-                Eq.gearOn();
-                Corpse();
-        }
+
+            }
     }
-
     public static void Outside() {
         System.out.println("Wyszedłeś z kanałów."+PURPLE+"(1)idz na poludnie/(2)idz na polnoc/(3)/idz na wschod/(4)idz na zachod/(b)spij(regeneracja hp i  many)/(s)statystyki/(e)/ekwipunek/(p)wyposażenie"+RESET);
         Scanner odczyt = new Scanner(System.in);
         String x = odczyt.nextLine();
-
 
         switch (x) {
 

@@ -68,7 +68,7 @@ public class Monsters {
     public static void die(){
         double coin = Random.random(1,100)*Monsters.coins;
         double exp = Random.random(5,15)*Monsters.exp;
-        double drop = Random.random(1,10)*Monsters.drop;
+        double drop = Random.random(1,4)*Monsters.drop;
 
         if(drop==1){
             System.out.println("Z "+getMonsterName()+"a"+CYAN+" wypadła pochodnia!"+RESET);

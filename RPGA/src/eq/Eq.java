@@ -5,6 +5,8 @@ import game.Player;
 import java.util.Scanner;
 
 public class Eq {
+    static boolean exit = true;
+
     public static final String CYAN = "\u001B[36m"; //zdobywanie itemku
     public static final String RESET = "\u001B[0m";
     public static final String RED = "\u001B[31m";//otrzymanie obrażeń
@@ -69,7 +71,7 @@ public class Eq {
     public static void unequipWeapon(int current)
     {
         Player.setAttack( - Weapons.WeaponsArray[current].attack);
-        Player.setHealth(-  Weapons.WeaponsArray[current].health,- Weapons.WeaponsArray[current].health);
+        Player.setHealth( - Weapons.WeaponsArray[current].health,- Weapons.WeaponsArray[current].health);
         Player.setDeffence(- Weapons.WeaponsArray[current].deffence);
         addWeaponToEq(current);
     }
@@ -83,50 +85,99 @@ public class Eq {
             WeaponEq[x] = -1;
         }
     }
+
     public static void addItemToEq (int addId) {
+        if(Player.getCurrentItems()<10){
         for (int a = 0; a < 10; a++) {
             if (ItemEq[a] == -1) {
                 ItemEq[a] = Items.ItemsArray[addId].id;
                 System.out.println(CYAN+"Nowy przedmiot został dodany do twojego ekwipunku"+RESET);
                 break;
             }
-        }
+        }}
+        else System.out.println("Nie masz już miejsca w ekwipunku");
     }
+
     public static void addWeaponToEq (int addId){
-            for(int a=0;a<10;a++){
-                if(WeaponEq[a] == -1) {
+        if(Player.getCurrentWeapons()<5) {
+            for (int a = 0; a < 5; a++) {
+                if (WeaponEq[a] == -1) {
                     WeaponEq[a] = Weapons.WeaponsArray[addId].id;
-                    System.out.println(CYAN+"Nowa broń została dodana do twojego ekwipunku"+RESET);
+                    System.out.println(CYAN + "Nowa broń została dodana do twojego ekwipunku" + RESET);
+                    Player.setCurrentWeapons(1);
                     break;
+
                 }
             }
         }
+        else System.out.println("Nie masz już miejsca w plecaku na bronie");
+        }
 
-        public static void gearOn(){
-            System.out.println("Broń: "+currentWeaponName);
-            System.out.println(PURPLE+"(1)Zmień broń/(2)Wyświetl statystyki/(x)Wróć"+RESET);
+        public static void gearOn() {
+            System.out.println("Broń: " + currentWeaponName);
+            System.out.println(PURPLE + "(1)Zmień broń/(2)Wyświetl statystyki/(x)Wróć" + RESET);
             Scanner scanner = new Scanner(System.in);
             String x = scanner.next();
             //System.out.println("Zbroja: "+currentArmorName);
+            if(x.equals("1")) {
+                unequipWeapon(Eq.currentWeapon);
+                changeWeapon();
+            }
+                   else if(x.equals("2")) {
+                System.out.println("atak +" + Weapons.WeaponsArray[currentWeapon].attack);
+                System.out.println("obrona +" + Weapons.WeaponsArray[currentWeapon].deffence);
+                System.out.println("życie +" + Weapons.WeaponsArray[currentWeapon].health);
+                gearOn();
+            }
+                   else if(x.equals("x")){
+                        return;
+                }
 
-            switch(x){
-                case "1":
-                    unequipWeapon(Eq.currentWeapon);
-                    setCurrentWeapon(Weapons.WeaponsArray[WeaponEq[0]].id);
+            }
+            public static void changeWeapon(){
+                Scanner scanner = new Scanner(System.in);
+                String x = scanner.next();
+                if(x.equals("1")){
+                        setCurrentWeapon(Weapons.WeaponsArray[WeaponEq[0]].id);
+                        System.out.println(Weapons.WeaponsArray[WeaponEq[0]].name + " został założony");
+                        WeaponEq[0] = -1;
+                        gearOn();
+                }
+                if(x.equals("2")) {
+                    setCurrentWeapon(Weapons.WeaponsArray[WeaponEq[1]].id);
+                    System.out.println(Weapons.WeaponsArray[WeaponEq[1]].name + " został założony");
                     WeaponEq[0] = -1;
                     gearOn();
-                case "2":
-                    System.out.println("atak +"+Weapons.WeaponsArray[currentWeapon].attack);
-                    System.out.println("obrona +"+Weapons.WeaponsArray[currentWeapon].deffence);
-                    System.out.println("życie +" +Weapons.WeaponsArray[currentWeapon].health);
+                }
+                if(x.equals("3")) {
+                    setCurrentWeapon(Weapons.WeaponsArray[WeaponEq[2]].id);
+                    System.out.println(Weapons.WeaponsArray[WeaponEq[2]].name + " został założony");
+                    WeaponEq[0] = -1;
                     gearOn();
-                case "x":
-                   break;
+                }
+                if(x.equals("4")) {
+                    setCurrentWeapon(Weapons.WeaponsArray[WeaponEq[3]].id);
+                    System.out.println(Weapons.WeaponsArray[WeaponEq[3]].name + " został założony");
+                    WeaponEq[0] = -1;
+                    gearOn();
+                }
+
+                if(x.equals("5")) {
+                    setCurrentWeapon(Weapons.WeaponsArray[WeaponEq[4]].id);
+                    System.out.println(Weapons.WeaponsArray[WeaponEq[4]].name + " został założony");
+                    WeaponEq[0] = -1;
+                    gearOn();
+                }
+
+
+
+
+
 
             }
         }
 
-    }
+
 
 
 
